@@ -40,6 +40,16 @@ app.get('/api/v1/welcome', (req: Request, res: Response) => {
   });
 });
 
+
+app.get('/api/v1/goodbye-nauman', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Good Bye Nauman!',
+    timestamp: new Date().toISOString(),
+    service: 'Task Manager API'
+  });
+});
+
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/tasks', taskRouter);
 
