@@ -2,11 +2,12 @@
   "name": "task-manager-api",
   "version": "1.0.0",
   "description": "A simple RESTful API for a Task Management Application",
-  "main": "src/dist/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node src/dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "build": "NODE_ENV=production tsc",
+    "start": "NODE_ENV=production node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "mongoose": "^8.0.3",
