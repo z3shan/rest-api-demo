@@ -22,6 +22,24 @@ app.use(helmet());
 app.use(express.json({ limit: '10kb' }));
 
 // 3) ROUTES
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    service: 'Task Manager API',
+    version: '1.0.0'
+  });
+});
+
+app.get('/api/v1/welcome', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Your Node server is running successfully!',
+    timestamp: new Date().toISOString(),
+    service: 'Task Manager API'
+  });
+});
+
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/tasks', taskRouter);
 
