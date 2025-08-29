@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
 import { Request, Response, NextFunction } from 'express';
