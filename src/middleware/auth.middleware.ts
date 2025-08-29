@@ -2,16 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AuthService } from '../services/auth.service';
 import { AppError } from '../utils/appError';
-import { IUser } from '../models/user.model';
-
-interface AuthRequest extends Request {
-  user?: Omit<IUser, 'password'>;
-}
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const authService = new AuthService();
 
-export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const protect = async (req: Request, res: Response, next: NextFunction) => {
   try {
     let token: string | undefined;
 
@@ -30,7 +25,14 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       return next(new AppError('The user belonging to this token no longer exists.', 401));
     }
 
-    req.user = currentUser;
+    // Transform the user object to match the Express Request interface
+    req.user = {
+      _id: String(currentUser._id),
+      name: currentUser.name,
+      email: currentUser.email,
+      createdAt: currentUser.createdAt,
+      updatedAt: currentUser.updatedAt
+    };
     next();
   } catch (error) {
     next(error);

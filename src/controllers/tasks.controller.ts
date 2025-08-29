@@ -6,6 +6,10 @@ const taskService = new TaskService();
 
 export const getAllTasks = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (!req.user) {
+      return next(new AppError('User not authenticated', 401));
+    }
+    
     const tasks = await taskService.getUserTasks(req.user._id);
 
     res.status(200).json({
@@ -22,6 +26,10 @@ export const getAllTasks = async (req: Request, res: Response, next: NextFunctio
 
 export const createTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (!req.user) {
+      return next(new AppError('User not authenticated', 401));
+    }
+    
     const { title, description } = req.body;
 
     const newTask = await taskService.createTask({
@@ -43,6 +51,10 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
 
 export const updateTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (!req.user) {
+      return next(new AppError('User not authenticated', 401));
+    }
+    
     const { id } = req.params;
     const { title, description, completed } = req.body;
 
@@ -72,6 +84,10 @@ export const updateTask = async (req: Request, res: Response, next: NextFunction
 
 export const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (!req.user) {
+      return next(new AppError('User not authenticated', 401));
+    }
+    
     const { id } = req.params;
 
     // First, verify the task belongs to the user

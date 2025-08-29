@@ -14,11 +14,9 @@ import {
 
 const router = Router();
 
-router.use(protect);
-
-router.get('/', getAllTasks);
-router.post('/', validate(createTaskValidation), createTask);
-router.patch('/:id', validate(updateTaskValidation), updateTask);
-router.delete('/:id', deleteTask);
+router.get('/', protect, getAllTasks);
+router.post('/', protect, validate(createTaskValidation), createTask);
+router.patch('/:id', protect, validate(updateTaskValidation), updateTask);
+router.delete('/:id', protect, deleteTask);
 
 export default router;
