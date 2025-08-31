@@ -99,9 +99,12 @@ export const deleteTask = async (req: Request, res: Response, next: NextFunction
 
     await taskService.deleteTask(id, req.user._id);
 
-    res.status(204).json({
+    res.status(200).json({
       status: 'success',
-      data: null,
+      message: 'Task deleted successfully',
+      data: {
+        deletedTaskId: id
+      },
     });
   } catch (error) {
     next(error);
