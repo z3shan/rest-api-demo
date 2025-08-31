@@ -40,6 +40,8 @@ app.get('/api/v1/welcome', (req: Request, res: Response) => {
   });
 });
 
+
+
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/tasks', taskRouter);
 
