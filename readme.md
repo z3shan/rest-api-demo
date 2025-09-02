@@ -99,6 +99,9 @@ PORT=3000
 - `npm run build`: Compile TypeScript to `dist/` directory
 - `npm start`: Start compiled application from `dist/`
 - `npm run postinstall`: Automatically build after install
+- `npm test`: Run the complete unit test suite
+- `npm run test:watch`: Run tests in watch mode (auto-reload on changes)
+- `npm run test:coverage`: Generate and view test coverage report
 
 ## API Endpoints
 
@@ -174,58 +177,24 @@ curl -X PATCH http://localhost:3000/api/v1/tasks/task-id-here \
   }'
 ```
 
-## Data Models
+## Testing
 
-### User Model
-- `name`: String (2-50 characters, required)
-- `email`: String (unique, required, validated format)
-- `password`: String (min 6 characters, hashed with bcrypt)
-- `createdAt`, `updatedAt`: Timestamps
+This project includes a comprehensive unit test suite built with Jest and TypeScript. The tests cover all major components of the application including controllers, services, models, middleware, and utilities.
 
-### Task Model
-- `title`: String (1-100 characters, required)
-- `description`: String (optional, max 500 characters)
-- `completed`: Boolean (default: false)
-- `userId`: ObjectId reference to User
-- `createdAt`, `updatedAt`: Timestamps
 
-## Security Features
+### Test Commands
 
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: Bcrypt with salt rounds for password security
-- **Input Validation**: Comprehensive Joi validation with custom error messages
-- **Security Headers**: Helmet middleware for security headers
-- **Data Isolation**: Users can only access their own tasks
-- **Rate Limiting**: Built-in Express security features
+Run the complete test suite:
+```bash
+npm test
+```
 
-## Validation & Error Handling
+Run tests in watch mode (automatically re-runs on file changes):
+```bash
+npm run test:watch
+```
 
-- All inputs are validated using Joi schemas with custom error messages
-- Global error handling middleware for consistent error responses
-- Custom `AppError` class for structured error handling
-- Input sanitization and length restrictions
-- Proper HTTP status codes for different error types
-
-## Database Features
-
-- MongoDB with Mongoose ODM
-- Automatic timestamps on all models
-- Indexed queries for performance
-- Data validation at the schema level
-- Proper error handling for database operations
-
-## Development Features
-
-- TypeScript for type safety and better development experience
-- Hot reload with `ts-node-dev`
-- Comprehensive type definitions
-- Service layer architecture for maintainable code
-- Middleware-based authentication and validation
-
-## Notes
-
-- The API ensures complete data isolation per user
-- All task operations require valid JWT authentication
-- Input validation prevents malicious data entry
-- Error messages are user-friendly and informative
-- The system automatically handles password hashing and JWT token management
+Generate and view test coverage report:
+```bash
+npm run test:coverage
+```
